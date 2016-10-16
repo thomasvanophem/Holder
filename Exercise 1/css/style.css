@@ -6,6 +6,10 @@
     margin-top: 20px;
 }
 
+.panel {
+    min-width: 300px;
+}
+
 .panel-heading {
     width: 100%;
 }
