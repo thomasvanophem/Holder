@@ -107,7 +107,7 @@ function validateExpiryDate(date) {
     var year = "20" + temp[1];
 
     var currentDate = new Date();
-    var currentMonth = currentDate.getMonth();
+    var currentMonth = currentDate.getMonth() + 1;
     var currentYear = currentDate.getFullYear();
 
     if (currentMonth <= 9) {
@@ -165,7 +165,7 @@ $(document).ready(function() {
 
         $("#card-type").val(getCardType($(this).val()));
     });
-
+    
     $("#card-cvc").focusout(function() {
         var parent = $(this).parent();
 
@@ -181,8 +181,12 @@ $(document).ready(function() {
             if ($(this).val().length >= 5) {
                 event.preventDefault();
             } else {
-                if ($(this).val().length == 2) {
-                    $(this).val($(this).val() + "/");
+                if ((event.which >= 48 && event.which <= 57) || (event.which >= 96 && event.which <= 105)) {
+                    if ($(this).val().length == 2) {
+                        $(this).val($(this).val() + "/");
+                    }
+                } else {
+                    event.preventDefault();
                 }
             }
         }
@@ -194,7 +198,7 @@ $(document).ready(function() {
         if (validateExpiryDate($(this).val())) {
             valid(parent);
         } else {
-            invalid(parent, "Invalid date!");
+            invalid(parent, "Card expired!");
         }
     });
 
