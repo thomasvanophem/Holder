@@ -37,7 +37,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="form-group">
-                                            <label for="cardNumber" class="info">name on card</label>
+                                            <label for="cardName" class="info">name on card</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" id="card-name" name="cardName" placeholder="Your name" required autofocus />
                                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -48,10 +48,25 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="form-group">
+                                            <label for="cardType" class="info">card type</label>
+                                            <div class="input-group">
+                                            	<select name="cardType" id="card-type" required>
+                                            		<option value=""></option>
+                                            		<option value="0">Visa</option>
+                                            		<option value="1">MasterCard</option>
+                                            		<option value="2">American Express</option>
+                                        			<option value="3">Other</option>
+                                    			</select>
+                                            </div>
+                                        </div>                            
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
                                             <label for="cardNumber" class="info">card number</label>
-                                            <div class="input-group has-success has-feedback">
+                                            <div class="input-group">
                                                 <input type="text" class="form-control" id="card-number" name="cardNumber" placeholder="5555 5555 5555 5555" required />
-                                                <span class="glyphicon glyphicon-ok form-control-feedback"></span>
                                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
                                             </div>
                                         </div>                            
