@@ -95,6 +95,32 @@ function validateCVC(cvc, cardType) {
     }
 }
 
+/*
+    Validate the expiry date
+    If date is in the future: valid
+    Else: invalid
+*/
+function validateExpiryDate(date) {
+    var temp = date.split("/");
+
+    var month = temp[0];
+    var year = "20" + temp[1];
+
+    var currentDate = new Date();
+    var currentMonth = currentDate.getMonth();
+    var currentYear = currentDate.getFullYear();
+
+    if (currentMonth <= 9) {
+        currentMonth = "0" + currentMonth;
+    }
+
+    if (year > currentYear || (year == currentYear && month >= currentMonth)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 // Add success class and nice green check mark to the input
 function valid(element) {
     element.removeClass("has-error has-feedback");
@@ -118,7 +144,7 @@ function invalid(element, message) {
 }
 
 $(document).ready(function() {
-    $("#card-name").bind("change focusout keyup", function() {
+    $("#card-name").bind("focusout keyup", function() {
     	var parent = $(this).parent();
 
     	if (validateCardName($(this).val())) {
@@ -128,7 +154,7 @@ $(document).ready(function() {
     	}
     });
 
-    $("#card-number").bind("change focusout", function() {
+    $("#card-number").bind("focusout keyup", function() {
         var parent = $(this).parent();
 
         if (validateCardNumber($(this).val())) {
@@ -139,4 +165,37 @@ $(document).ready(function() {
 
         $("#card-type").val(getCardType($(this).val()));
     });
+
+    $("#card-cvc").focusout(function() {
+        var parent = $(this).parent();
+
+        if (validateCVC($(this).val(), $("#card-type").val())) {
+            valid(parent);
+        } else {
+            invalid(parent, "Invalid CV code!");
+        }
+    });
+
+    $("#card-expiry").bind("keyup keydown", function(event) {
+        if (event.which != 8 && event.which != 9) {
+            if ($(this).val().length >= 5) {
+                event.preventDefault();
+            } else {
+                if ($(this).val().length == 2) {
+                    $(this).val($(this).val() + "/");
+                }
+            }
+        }
+    });
+
+    $("#card-expiry").focusout(function() {
+        var parent = $(this).parent();
+
+        if (validateExpiryDate($(this).val())) {
+            valid(parent);
+        } else {
+            invalid(parent, "Invalid date!");
+        }
+    });
+
 });
