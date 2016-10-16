@@ -1,0 +1,19 @@
+$(document).ready(function() {
+    console.log("test");
+    $("#card-expiry").keyup(function(event) {
+      var key = event.keyCode || event.charCode;
+        console.log(key);
+      
+      if (key != 8 && key != 46) {
+        if (key > 48 && key < 57) {
+            var date = $(this).val();
+
+            if (date.length == 2) {
+              $(this).val(date + "/");
+            }
+        } else {
+            event.preventDefault();
+        }
+      }
+    });
+});
