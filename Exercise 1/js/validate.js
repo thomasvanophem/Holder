@@ -101,14 +101,20 @@ function valid(element) {
     element.find(".form-control-feedback").remove();
     element.addClass("has-success has-feedback");
     element.append("<span class=\"glyphicon glyphicon-ok form-control-feedback\"></span>");
+
+    // Clear error message and hide span
+    element.parent().find(".error-message").html("").hide();
 }
 
 // Add error class and not so nice red cross to the input
-function invalid(element) {
+function invalid(element, message) {
     element.removeClass("has-success has-feedback");
     element.find(".form-control-feedback").remove();
     element.addClass("has-error has-feedback");
     element.append("<span class=\"glyphicon glyphicon-remove form-control-feedback\"></span>");
+
+    // Add error message and show span
+    element.parent().find(".error-message").html(message).show();
 }
 
 $(document).ready(function() {
@@ -118,7 +124,7 @@ $(document).ready(function() {
     	if (validateCardName($(this).val())) {
             valid(parent);
     	} else {
-            invalid(parent);
+            invalid(parent, "Invalid name!");
     	}
     });
 
@@ -128,7 +134,7 @@ $(document).ready(function() {
         if (validateCardNumber($(this).val())) {
             valid(parent);
         } else {
-            invalid(parent);
+            invalid(parent, "Invalid card number!");
         }
 
         $("#card-type").val(getCardType($(this).val()));

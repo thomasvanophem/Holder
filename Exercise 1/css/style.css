@@ -10,6 +10,18 @@
     min-width: 300px;
 }
 
+.error-message {
+    display: none;
+    width: 100%;
+    font-weight: bold;
+    color: #A94442;
+    padding: 20px 0px 0px 10px;
+}
+
+.card-type, .card-type select {
+  width: 100%;
+}
+
 .panel-heading {
     width: 100%;
 }

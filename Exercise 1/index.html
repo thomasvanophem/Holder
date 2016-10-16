@@ -42,6 +42,7 @@
                                                 <input type="text" class="form-control" id="card-name" name="cardName" placeholder="Your name" required autofocus />
                                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                             </div>
+                                            <span class="error-message"></span>
                                         </div>                            
                                     </div>
                                 </div>
@@ -49,7 +50,7 @@
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <label for="cardType" class="info">card type</label>
-                                            <div class="input-group">
+                                            <div class="input-group card-type">
                                             	<select name="cardType" id="card-type" required>
                                             		<option value=""></option>
                                             		<option value="0">Visa</option>
@@ -69,6 +70,7 @@
                                                 <input type="text" class="form-control" id="card-number" name="cardNumber" placeholder="5555 5555 5555 5555" required />
                                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
                                             </div>
+                                            <span class="error-message"></span>
                                         </div>                            
                                     </div>
                                 </div>
@@ -76,7 +78,7 @@
                                     <div class="col-xs-7 col-md-7">
                                         <div class="form-group">
                                             <label for="cardExpiry" class="info"><span class="hidden-xs">expiration</span><span class="visible-xs-inline">exp</span> date</label>
-                                            <div class="input-group">
+                                            <!--<div class="input-group">
                                             <select name="cardExpiryMonth" required>
                                                 <option value="">MM</option>
                                                 <option value="1">01</option>
@@ -108,11 +110,11 @@
                                                 <option value="11">11</option>
                                                 <option value="12">12</option>
                                             </select>
-                                            </div>
-                                            <!--<div class="input-group">
+                                            </div>-->
+                                            <div class="input-group">
                                                 <input type="text" class="form-control" id="card-expiry" name="cardExpiry" placeholder="MM/YY" maxlength="5" required />
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            </div>-->
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-5 col-md-5 pull-right">
