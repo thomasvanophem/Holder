@@ -15,7 +15,6 @@
     width: 100%;
     font-weight: bold;
     color: #A94442;
-    padding: 20px 0px 0px 10px;
 }
 
 .card-type, .card-type select {
@@ -48,6 +47,10 @@
     display: table-cell;
     vertical-align: middle;
     width: 50%;
+}
+
+.input-group {
+    padding-bottom: 5px;
 }
 
 .input-group-addon {

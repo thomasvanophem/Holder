@@ -147,20 +147,28 @@ $(document).ready(function() {
     $("#card-name").bind("focusout keyup", function() {
     	var parent = $(this).parent();
 
-    	if (validateCardName($(this).val())) {
-            valid(parent);
+    	if ($(this).val().length == 0) {
+    		invalid(parent, "Name is required!");
     	} else {
-            invalid(parent, "Invalid name!");
+	    	if (validateCardName($(this).val())) {
+	            valid(parent);
+	    	} else {
+	            invalid(parent, "Invalid name!");
+	    	}
     	}
     });
 
     $("#card-number").bind("focusout keyup", function() {
         var parent = $(this).parent();
 
-        if (validateCardNumber($(this).val())) {
-            valid(parent);
+        if ($(this).val().length == 0) {
+        	invalid(parent, "Card number is required!");
         } else {
-            invalid(parent, "Invalid card number!");
+	        if (validateCardNumber($(this).val())) {
+	            valid(parent);
+	        } else {
+	            invalid(parent, "Invalid card number!");
+	        }
         }
 
         $("#card-type").val(getCardType($(this).val()));
@@ -169,10 +177,14 @@ $(document).ready(function() {
     $("#card-cvc").focusout(function() {
         var parent = $(this).parent();
 
-        if (validateCVC($(this).val(), $("#card-type").val())) {
-            valid(parent);
+        if ($(this).val().length == 0) {
+        	invalid(parent, "CV Code is required!");
         } else {
-            invalid(parent, "Invalid CV code!");
+	        if (validateCVC($(this).val(), $("#card-type").val())) {
+	            valid(parent);
+	        } else {
+	            invalid(parent, "Invalid CV code!");
+	        }
         }
     });
 
@@ -195,10 +207,14 @@ $(document).ready(function() {
     $("#card-expiry").focusout(function() {
         var parent = $(this).parent();
 
-        if (validateExpiryDate($(this).val())) {
-            valid(parent);
+        if ($(this).val().length == 0) {
+        	invalid(parent, "Expiry date is required!");
         } else {
-            invalid(parent, "Card expired!");
+	        if (validateExpiryDate($(this).val())) {
+	            valid(parent);
+	        } else {
+	            invalid(parent, "Card expired!");
+	        }
         }
     });
 
