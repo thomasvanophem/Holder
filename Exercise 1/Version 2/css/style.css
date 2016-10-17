@@ -15,7 +15,6 @@
     width: 100%;
     font-weight: bold;
     color: #A94442;
-    padding: 20px 0px 0px 10px;
 }
 
 .card-type, .card-type select {
@@ -50,6 +49,10 @@
     width: 50%;
 }
 
+.input-group {
+    padding-bottom: 5px;
+}
+
 .input-group-addon {
     min-width: 40px;
 }
@@ -61,26 +64,4 @@ img {
 
 select {
     height: 34px;
-}
-
-/* TODO */
-
-.form-control.error {
-    border-color: red;
-    outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
-}
-
-label.error {
-  font-weight: bold;
-  color: red;
-  padding: 2px 8px;
-  margin-top: 2px;
-}
-
-.payment-errors {
-  font-weight: bold;
-  color: red;
-  padding: 2px 8px;
-  margin-top: 2px;
 }

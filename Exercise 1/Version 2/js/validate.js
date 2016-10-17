@@ -1,12 +1,11 @@
-
 function validateCardName(name) {
-	var pattern = /^(?!.*[.]{2})(?!.*[\s]{2})(?!.*[\-]{2})[a-zA-Z.\-\s]+$/;
+    var pattern = /^(?!.*[.]{2})(?!.*[\s]{2})(?!.*[\-]{2})[a-zA-Z.\-\s]+$/;
 
-	if (pattern.test(name)) {
-		return true;
-	} else {
-		return false;
-	}
+    if (pattern.test(name)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /*
@@ -26,11 +25,11 @@ function validateCardName(name) {
 function getCardType(number) {
     var temp = number.toString().replace(/[^\d]/g, "");
 
-    if (/^4[0-9]{12}(?:[0-9]{3})?(?:[0-9]{3})?$/.test(temp)) {
+    if (/^4/.test(temp)) {
         return 0;
-    } else if (/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/.test(temp)) {
+    } else if (/^(?:5[1-5]|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)/.test(temp)) {
         return 1;
-    } else if (/^3[47][0-9]{13}$/.test(temp)) {
+    } else if (/^3[47]/.test(temp)) {
         return 2;
     } else {
         return 3;
@@ -123,7 +122,10 @@ function validateExpiryDate(date) {
 
 // Add success class and nice green check mark to the input
 function valid(element) {
-    element.removeClass("has-error has-feedback");
+    if (element.hasClass("has-error has-feedback")) {
+        element.removeClass("has-error has-feedback");
+    }
+
     element.find(".form-control-feedback").remove();
     element.addClass("has-success has-feedback");
     element.append("<span class=\"glyphicon glyphicon-ok form-control-feedback\"></span>");
@@ -134,7 +136,10 @@ function valid(element) {
 
 // Add error class and not so nice red cross to the input
 function invalid(element, message) {
-    element.removeClass("has-success has-feedback");
+    if (element.hasClass("has-success has-feedback")) {
+        element.removeClass("has-success has-feedback");
+    }
+
     element.find(".form-control-feedback").remove();
     element.addClass("has-error has-feedback");
     element.append("<span class=\"glyphicon glyphicon-remove form-control-feedback\"></span>");
@@ -145,34 +150,58 @@ function invalid(element, message) {
 
 $(document).ready(function() {
     $("#card-name").bind("focusout keyup", function() {
-    	var parent = $(this).parent();
+        var parent = $(this).parent();
 
-    	if (validateCardName($(this).val())) {
-            valid(parent);
-    	} else {
-            invalid(parent, "Invalid name!");
-    	}
+        if ($(this).val().length == 0) {
+            invalid(parent, "Name is required!");
+        } else {
+            if (validateCardName($(this).val())) {
+                valid(parent);
+            } else {
+                invalid(parent, "Invalid name!");
+            }
+        }
     });
 
-    $("#card-number").bind("focusout keyup", function() {
+    $("#card-number").focusout(function() {
         var parent = $(this).parent();
+
+        if ($(this).val().length == 0) {
+            invalid(parent, "Card number is required!");
+        } else {
+            if (validateCardNumber($(this).val())) {
+                $("#card-type").val(getCardType($(this).val()));
+                
+                valid(parent);
+            } else {
+                invalid(parent, "Invalid card number!");
+            }
+        }
+    });
+
+    $("#card-number").keyup(function() {
+        var parent = $(this).parent();
+
+        $("#card-type").val(getCardType($(this).val()));
 
         if (validateCardNumber($(this).val())) {
             valid(parent);
         } else {
             invalid(parent, "Invalid card number!");
         }
-
-        $("#card-type").val(getCardType($(this).val()));
     });
     
     $("#card-cvc").focusout(function() {
         var parent = $(this).parent();
 
-        if (validateCVC($(this).val(), $("#card-type").val())) {
-            valid(parent);
+        if ($(this).val().length == 0) {
+            invalid(parent, "CV Code is required!");
         } else {
-            invalid(parent, "Invalid CV code!");
+            if (validateCVC($(this).val(), $("#card-type").val())) {
+                valid(parent);
+            } else {
+                invalid(parent, "Invalid CV code!");
+            }
         }
     });
 
@@ -195,10 +224,14 @@ $(document).ready(function() {
     $("#card-expiry").focusout(function() {
         var parent = $(this).parent();
 
-        if (validateExpiryDate($(this).val())) {
-            valid(parent);
+        if ($(this).val().length == 0) {
+            invalid(parent, "Expiry date is required!");
         } else {
-            invalid(parent, "Card expired!");
+            if (validateExpiryDate($(this).val())) {
+                valid(parent);
+            } else {
+                invalid(parent, "Card expired!");
+            }
         }
     });
 
