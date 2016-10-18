@@ -1,10 +1,63 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="css/style.css">
+		<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+			  <script
+			  src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+			  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			  crossorigin="anonymous"></script>
+        <!-- Include Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+        <!-- Include font-awesome -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<script src="http://code.angularjs.org/1.0.2/angular.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
+		
+		
 		<title>
 			Opdracht 2
 		</title>
 	</head>
 	<body>
+		<div ng:controller="controller">
+    <input type="text" name="data" ng-model="data"><br>
+    <input type="button" ng-click="addItem()" value="add"><br>
+    <table style="width:auto;" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody ui:sortable ng:model="list">
+            <tr ng:repeat="item in list" class="item" style="cursor: move;">
+                <td>{{$index}}</td>
+                <td>{{item}}</td>
+            </tr>
+        </tbody>
+        </table>
+        <hr>
+</div>
+<script>
+  var myapp = angular.module('myapp', ['ui']);
+
+myapp.controller('controller', function ($scope) {
+    $scope.list = ["one", "two", "thre", "four", "five", "six"];
+    $scope.addItem = function() {
+    	$scope.list.push($scope.data);
+    }
+});
+
+angular.bootstrap(document, ['myapp']);
+</script>
+
+
+</script> 
 	</body>
 </html>
