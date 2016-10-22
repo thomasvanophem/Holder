@@ -46,7 +46,7 @@
             <p class="text-right">
     		    <a class="btn btn-primary" data-target="#addContactModal" data-toggle="modal">Contact toevoegen</a>
 		    </p>
-            <div id="addContactModal" role="dialog" class="modal fade" add-modal>
+            <div id="addContactModal" role="dialog" class="modal fade" my-modal>
                 <div class="modal-dialog modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>

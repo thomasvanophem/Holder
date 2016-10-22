@@ -5,7 +5,3 @@ i:hover {
 tr {
     cursor: move;
 }
-
-.container {
-    margin-top: 25px;
-}
