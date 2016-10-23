@@ -1,0 +1,7 @@
+Opdracht 2:
+
+Zou je een eenvoudig adressenboek kunnen maken (aanmaken, opslaan, wijzigen en verwijderen). Je hebt een eigen keuze in JS-framework (React, Angular, Elm, etc).
+
+    - Zorg dat de lijst met gebruikers is te sorteren op basis van achternaam.
+    - Zorg dat je zelf iemand op een bepaalde positie kan zetten/slepen/draggen.
+    - Zorg dat gebruikers uniek zijn op basis van; achternaam, telefoonnummer.
