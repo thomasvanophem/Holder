@@ -1,0 +1,7 @@
+i:hover {
+    cursor: pointer;
+}
+
+tr {
+    cursor: move;
+}

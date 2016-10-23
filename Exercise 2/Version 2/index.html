@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="http://code.angularjs.org/1.0.2/angular.min.js"></script>
+        <script src="https://raw.githubusercontent.com/angular-ui/ui-sortable/v0.10.1/sortable.js"></script>
+		<title>
+			Opdracht 2 - Adresboek
+		</title>
+	</head>
+	<body>
+		<div class="container" ng-controller="addressBookController">
+		    <form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Zoeken..." ng-model="searchFor">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                    </div>      
+                </div>
+            </form>
+            <table  class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th ng-click="sortBy='firstName'; reverseSort=!reverseSort">Voornaam <i ng-show="sortBy=='firstName' && !reverseSort" class="fa fa-sort-alpha-asc"></i><i ng-show="sortBy=='firstName' && reverseSort" class="fa fa-sort-alpha-desc"></i></th>
+                        <th ng-click="sortBy='lastName'; reverseSort=!reverseSort">Achternaam <i ng-show="sortBy=='lastName' && !reverseSort" class="fa fa-sort-alpha-asc"></i><i ng-show="sortBy=='lastName' && reverseSort" class="fa fa-sort-alpha-desc"></i></th>
+                        <th>Telefoon nummer</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody ui-sortable ng-model="list">
+                    <tr ng-repeat="contact in contacts | orderBy:sortBy:reverseSort | filter:searchFor">
+                        <td>{{contact.firstName}}</td>
+                        <td>{{contact.lastName}}</td>
+                        <td>{{contact.phoneNumber}}</td>
+                        <td class="text-center"><i class="fa fa-pencil fa-lg" ng-click="editContact(contact)"></i></td>
+                        <td class="text-center"><i class="fa fa-trash fa-lg" ng-click="deleteContact(contact)"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-right">
+    		    <a class="btn btn-primary" data-target="#addContactModal" data-toggle="modal">Contact toevoegen</a>
+		    </p>
+            <div id="addContactModal" role="dialog" class="modal fade" add-modal>
+                <div class="modal-dialog modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Contact toevoegen</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" ng-show="addContactExists" ng-hide="!addContactExists">
+                            Deze gegevens staan al in uw adresboek!
+                        </div>
+                        <div class="alert alert-danger" ng-show="requiredFields" ng-hide="!requiredFields">
+                            U heeft niet alle gegevens ingevuld!
+                        </div>
+                        <form class="form-horizontal" ng-submit="addContact()">
+                            <div class="form-group">
+                                <label for="firstName" class="col-sm-2">Voornaam</label>
+                                <div class="col-sm-10">                         
+    		                        <input type="text" id="firstName" class="form-control" ng-model="firstName" placeholder="Voornaam" value="">
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="lastName" class="col-sm-2">Achternaam</label>
+	                            <div class="col-sm-10">
+        		                    <input type="text" id="lastname" class="form-control" ng-model="lastName" placeholder="Achternaam" value="">
+    		                    </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="phoneNumber" class="col-sm-2">Telefoon nummer</label>
+	                            <div class="col-sm-10">
+        		                    <input type="tel" id="phoneNumber" class="form-control" ng-model="phoneNumber" placeholder="0612345678" value="">
+    		                    </div>
+    		                </div>
+    		                <div class="form-group">
+    		                    <div class="col-sm-10 col-sm-offset-2">
+                                    <input type="submit" value="Toevoegen" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="editContactModal" role="dialog" class="modal fade" edit-modal my-modal>
+                <div class="modal-dialog modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Contact bewerken</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" ng-show="editContactExists" ng-hide="!editContactExists">
+                            Deze gegevens staan al in uw adresboek!
+                        </div>
+                        <div class="alert alert-danger" ng-show="requiredFields" ng-hide="!requiredFields">
+                            U heeft niet alle gegevens ingevuld!
+                        </div>
+                        <form class="form-horizontal" ng-submit="saveContact()">
+                            <input type="hidden" ng-model="editID">
+                            <div class="form-group">
+                                <label for="firstName" class="col-sm-2">Voornaam</label>
+                                <div class="col-sm-10">                         
+    		                        <input type="text" id="firstName" class="form-control" ng-model="editFirstName" placeholder="Voornaam">
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="lastName" class="col-sm-2">Achternaam</label>
+	                            <div class="col-sm-10">
+        		                    <input type="text" id="lastname" class="form-control" ng-model="editLastName" placeholder="Achternaam">
+    		                    </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="phoneNumber" class="col-sm-2">Telefoon nummer</label>
+	                            <div class="col-sm-10">
+        		                    <input type="tel" id="phoneNumber" class="form-control" ng-model="editPhoneNumber" placeholder="0683609531">
+    		                    </div>
+    		                </div>
+    		                <div class="form-group">
+    		                    <div class="col-sm-10 col-sm-offset-2">
+                                    <input type="submit" value="Opslaan" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</body>
+	<script src="js/app.js"></script>
+</html>
