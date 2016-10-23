@@ -33,7 +33,7 @@
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
-                <tbody ui-sortable="sortableOptions" ng-model="list">
+                <tbody ui-sortable ng-model="list">
                     <tr ng-repeat="contact in contacts | orderBy:sortBy:reverseSort | filter:searchFor">
                         <td>{{contact.firstName}}</td>
                         <td>{{contact.lastName}}</td>

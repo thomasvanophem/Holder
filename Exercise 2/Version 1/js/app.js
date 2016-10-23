@@ -1,5 +1,6 @@
 var app = angular.module("addressBook", ["ui.sortable"]);
 
+// Add directive so we can close the modal when the submit button is clicked
 app.directive("addModal", function() {
     return {
         restrict: "A",
@@ -11,6 +12,7 @@ app.directive("addModal", function() {
     } 
 });
 
+// Add directive so we can open and close the modal when the edit button is clicked
 app.directive("editModal", function() {
     return {
         restrict: "A",
@@ -27,8 +29,12 @@ app.directive("editModal", function() {
 });
 
 function addressBookController($scope) {
-    $scope.contacts = [{firstName : "Thomas", lastName : "van Ophem", phoneNumber : "0683609531"},
-                        {firstName : "Jose", lastName : "Cats", phoneNumber : "0611405443"}];
+    $scope.contacts = [{firstName : "Thomas", lastName : "van Ophem", phoneNumber : "0683609531"}];
+    
+    
+    $scope.firstName = "";
+    $scope.lastName = "";
+    $scope.phoneNumber = "";
     
     $scope.sortBy = "lastName";
     $scope.reverseOrder = false;
@@ -40,8 +46,9 @@ function addressBookController($scope) {
         $scope.requiredFields = false;
         $scope.addContactExists = false;
         
-        if ($scope.firstName !== undefined && $scope.lastName !== undefined && 
-            $scope.phoneNumber !== undefined) {
+        // Check if the required fields are filled out
+        if ($scope.firstName.trim().length != 0 && $scope.lastName.trim().length != 0 && $scope.phoneNumber.trim().length != 0) {            
+            // Check if the lastname and phone number are already used for another contact
             $scope.contacts.forEach(function(contact) {
                 try {
                     if (contact.lastName.toLowerCase() == $scope.lastName.toLowerCase() && 
@@ -58,12 +65,14 @@ function addressBookController($scope) {
             });
             
             $scope.addContactExists = exists;
-                
+             
+            // If the lastname/phone number combination isn't used we add it to the list of contacts   
             if (!exists) {
             	$scope.contacts.push({firstName : $scope.firstName, 
             	                        lastName : $scope.lastName, 
             	                        phoneNumber : $scope.phoneNumber});
-            	                        $scope.firstName = "";
+                
+                $scope.firstName = "";
                 $scope.lastName = "";
                 $scope.phoneNumber = "";
                 
@@ -77,10 +86,12 @@ function addressBookController($scope) {
     $scope.editContact = function(item) {
         var contact = $scope.contacts[$scope.contacts.indexOf(item)];
         
+        // Load the contact details into the edit form
         $scope.editID = $scope.contacts.indexOf(item);
         $scope.editFirstName = contact.firstName;
         $scope.editLastName = contact.lastName;
         $scope.editPhoneNumber = contact.phoneNumber;
+        $scope.editOrder = contact.order;
         
         $scope.showEditModal();
     };
@@ -91,8 +102,10 @@ function addressBookController($scope) {
         $scope.requiredFields = false;
         $scope.editContactExists = false;
         
-        if ($scope.editFirstName !== "" && $scope.editLastName !== "" && 
-            $scope.editPhoneNumber !== "") {
+        // Check if the required fields are filled out
+        if ($scope.editFirstName.trim().length != 0 && $scope.editLastName.trim().length != 0 && 
+            $scope.editPhoneNumber.trim().length != 0) {
+            // Check if the lastname and phone number are already used for another contact
             $scope.contacts.forEach(function(contact) {
                 try {
                     if (contact.lastName.toLowerCase() == $scope.editLastName.toLowerCase() && 
@@ -111,6 +124,7 @@ function addressBookController($scope) {
             
             $scope.editContactExists = exists;
         
+            // If the lastname/phone number combination isn't used we update the contact
             if (!exists) {
                 $scope.contacts[$scope.editID] = {firstName : $scope.editFirstName, 
                                                     lastName : $scope.editLastName, 
@@ -124,6 +138,7 @@ function addressBookController($scope) {
     }
     
     $scope.deleteContact = function(item) {
+        // Delete the contact from the contacts array
         $scope.contacts.splice($scope.contacts.indexOf(item), 1)
     };
 }
